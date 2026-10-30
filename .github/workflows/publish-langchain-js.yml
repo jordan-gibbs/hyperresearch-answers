@@ -1,0 +1,50 @@
+# Publishes @hyperresearch/langchain to npm with provenance when a tag langchain-js-v<version> is pushed.
+# Needs npm setup first: see packages/langchain-js/README.md, "Releasing".
+name: publish langchain-js
+
+on:
+  push:
+    tags:
+      - "langchain-js-v*"
+
+permissions:
+  contents: read
+  id-token: write # npm provenance and trusted publishing
+
+concurrency:
+  group: publish-langchain-js
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+    defaults:
+      run:
+        working-directory: packages/langchain-js
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - name: npm 11.5.1+ (trusted publishing)
+        run: npm install -g npm@^11.5.1
+      - name: Tag matches package.json version
+        run: |
+          tag="${GITHUB_REF_NAME#langchain-js-v}"
+          version="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$version" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package.json version $version" >&2
+            exit 1
+          fi
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: Publish
+        run: npm publish --provenance --access public
+        env:
+          # Empty once a trusted publisher is configured on npmjs.com (OIDC is used instead).
+          # Needed only for the very first publish, before the package exists on npm.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

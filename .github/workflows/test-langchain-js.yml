@@ -1,0 +1,38 @@
+name: test langchain-js
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/langchain-js/**"
+      - ".github/workflows/test-langchain-js.yml"
+  pull_request:
+    paths:
+      - "packages/langchain-js/**"
+      - ".github/workflows/test-langchain-js.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
+    defaults:
+      run:
+        working-directory: packages/langchain-js
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: packages/langchain-js/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm pack --dry-run

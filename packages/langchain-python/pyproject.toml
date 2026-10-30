@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langchain-hyperresearch"
+version = "0.1.0"
+description = "LangChain integration for Hyperresearch Answers: a cited, quote-checked answer tool, a raw-source search tool and a retriever."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Hyperresearch" }]
+requires-python = ">=3.10,<4.0"
+keywords = ["langchain", "tools", "retriever", "search", "web-search", "answers", "citations", "agents", "hyperresearch"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "langchain-core>=1.0.0,<2.0.0",
+  "httpx>=0.27,<1.0",
+]
+
+[project.urls]
+Homepage = "https://hyperresearch.ai/answers"
+Documentation = "https://hyperresearch.ai/docs/answers/langchain"
+Repository = "https://github.com/jordan-gibbs/hyperresearch-answers"
+Source = "https://github.com/jordan-gibbs/hyperresearch-answers/tree/main/packages/langchain-python"
+Issues = "https://github.com/jordan-gibbs/hyperresearch-answers/issues"
+
+[dependency-groups]
+test = [
+  "pytest>=8.3",
+  "pytest-asyncio>=0.24",
+  "langchain-tests>=1.0.0",
+]
+lint = ["ruff>=0.8", "mypy>=1.13"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["langchain_hyperresearch"]
+
+[tool.hatch.build.targets.sdist]
+include = ["langchain_hyperresearch", "tests", "README.md", "LICENSE"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 160
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["UP045", "UP007"]
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
