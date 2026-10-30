@@ -52,9 +52,17 @@ No browser (CI)? Create an API key at https://console.hyperresearch.ai/#/keys an
 
 Calls are paid from prepaid credit in your Hyperresearch account. Every result shows what it cost and the balance left. New accounts get $5 of free credit, no card. Prices: https://hyperresearch.ai/answers
 
+## SDKs
+
+Optional packages that give your own agent code the same `ask` and `search` tools, over the REST API with an API key (not on npm or PyPI yet):
+
+- Vercel AI SDK: [`@hyperresearch/ai-sdk`](packages/ai-sdk/README.md)
+- LangChain (Python): [`langchain-hyperresearch`](packages/langchain-python/README.md)
+- LangChain.js: [`@hyperresearch/langchain`](packages/langchain-js/README.md)
+
 ## Support
 
 support@hyperresearch.ai · https://hyperresearch.ai/answers
 
 
-This repo holds documentation only. The server is hosted by Hyperresearch; nothing here needs to be installed or run.
+The server is hosted by Hyperresearch; nothing here needs to be installed or run to use it. `packages/` holds the optional SDKs above.

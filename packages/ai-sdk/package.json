@@ -1,0 +1,46 @@
+{
+  "name": "@hyperresearch/ai-sdk",
+  "version": "0.1.0",
+  "description": "Hyperresearch Answers tools for the Vercel AI SDK: cited, quote-checked answers (ask) and ranked sources with verbatim passages (search).",
+  "keywords": ["ai-sdk", "vercel-ai", "ai", "tools", "search", "web-search", "answers", "citations", "agents", "hyperresearch"],
+  "homepage": "https://hyperresearch.ai/docs/answers/ai-sdk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jordan-gibbs/hyperresearch-answers",
+    "directory": "packages/ai-sdk"
+  },
+  "bugs": { "url": "https://github.com/jordan-gibbs/hyperresearch-answers/issues" },
+  "license": "MIT",
+  "author": "Hyperresearch",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "peerDependencies": {
+    "ai": "^6.0.0 || ^7.0.0",
+    "zod": "^3.25.76 || ^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "ai": "^7.0.157",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "zod": "^4.1.12"
+  },
+  "publishConfig": { "access": "public", "provenance": true }
+}

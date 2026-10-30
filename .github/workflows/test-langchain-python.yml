@@ -1,0 +1,38 @@
+name: test langchain-python
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/langchain-python/**"
+      - ".github/workflows/test-langchain-python.yml"
+  pull_request:
+    paths:
+      - "packages/langchain-python/**"
+      - ".github/workflows/test-langchain-python.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    defaults:
+      run:
+        working-directory: packages/langchain-python
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python }}
+          enable-cache: true
+          cache-dependency-glob: packages/langchain-python/uv.lock
+      - run: uv sync --locked --group test --group lint
+      - run: uv run pytest
+      - run: uv run ruff check .
+      - run: uv run mypy langchain_hyperresearch
+      - run: uv build
