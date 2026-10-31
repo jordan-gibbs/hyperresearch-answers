@@ -30,6 +30,14 @@ Cline:
 cline mcp install hyperresearch-answers --transport http https://answers.hyperresearch.ai/mcp
 ```
 
+Agents setting this up for Cline can follow [llms-install.md](llms-install.md).
+
+Gemini CLI:
+
+```bash
+gemini extensions install https://github.com/jordan-gibbs/hyperresearch-answers
+```
+
 VS Code (GitHub Copilot agent mode):
 
 ```bash

@@ -1,0 +1,12 @@
+{
+  "name": "hyperresearch-answers",
+  "version": "1.0.0",
+  "description": "One search tool for agents: four web search engines and about 45 structured data sources, with answers checked against quoted sources.",
+  "mcpServers": {
+    "hyperresearch-answers": {
+      "httpUrl": "https://answers.hyperresearch.ai/mcp",
+      "timeout": 120000
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}
